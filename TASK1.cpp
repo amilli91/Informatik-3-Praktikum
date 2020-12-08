@@ -52,10 +52,10 @@ string BlackBoxUnsafe::randomPwd(int l){
 }
 
 void demoTASK1_00(){
-	string pwd("meinpassword");
+	string pwd("meinpasswort");
 	cout << "pwd   : " << pwd << endl;
 	cout << "SHA256: " << sha256(pwd) << endl;
-	pwd = ("einpassword");
+	pwd = ("einpaswort");
 	cout << "pwd   : " << pwd << endl;
 	cout << "SHA256: " << sha256(pwd) << endl;
 	return;
