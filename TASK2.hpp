@@ -1,5 +1,5 @@
 /*
- * TASK2.H
+ * TASK2.hpp
  *
  *  Created on: 12.09.2019
  *      Author: aml
@@ -8,18 +8,18 @@
 
 /**
  *
- * \file TASK2.H
+ * \file TASK2.hpp
  *
  * \brief Contains namespace TASK2. Namespace TASK2 contains the implementation
  * of demo file servers.
  *
  */
 
-#ifndef TASK2_H_
-#define TASK2_H_
+#ifndef TASK2_hpp_
+#define TASK2_hpp_
 
-#include "SIMPLESOCKET.H"
-#include "SHA256.H"
+#include "SIMPLESOCKET.hpp"
+#include "SHA256.hpp"
 
 
 /**
@@ -147,4 +147,4 @@ void demoTASK2();
 } // end namespace TASK2
 
 
-#endif /* TASK2_H_ */
+#endif /* TASK2_hpp_ */

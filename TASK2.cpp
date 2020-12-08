@@ -1,5 +1,5 @@
 /*
- * TASK2.C
+ * TASK2.cpp
  *
  *  Created on: 12.09.2019
  *      Author: aml
@@ -7,7 +7,7 @@
 
 #include <iostream>
 
-#include "TASK2.H"
+#include "TASK2.hpp"
 
 using namespace std;
 

@@ -1,5 +1,5 @@
 /*
- * SHA256.H
+ * SHA256.hpp
  *
  *  Created on: 10.09.2019
  *      Author: aml
@@ -7,7 +7,7 @@
 
 /**
  *
- * \file SHA256.H
+ * \file SHA256.hpp
  *
  * \brief Contains the implementation
  * of the check sum calculation.
@@ -109,4 +109,4 @@ std::string sha256(std::string input);
 
 
 
-#endif /* SHA256_H_ */
+#endif /* SHA256_hpp_ */

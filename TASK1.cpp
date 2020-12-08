@@ -1,5 +1,5 @@
 /*
- * TASK1.C
+ * TASK1.cpp
  *
  *  Created on: 10.09.2019
  *      Author: aml
@@ -9,8 +9,8 @@
 #include <cstring>
 #include <iostream>
 
-#include "TASK1.H"
-#include "SHA256.H"
+#include "TASK1.hpp"
+#include "SHA256.hpp"
 
 namespace TASK1{
 

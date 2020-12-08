@@ -16,7 +16,7 @@
 #include <sys/socket.h> // for socket creation
 #include <netinet/in.h> //contains constants and structures needed for internet domain addresses
 
-#include "SIMPLESOCKET.H"
+#include "SIMPLESOCKET.hpp"
 
 
 int main(){

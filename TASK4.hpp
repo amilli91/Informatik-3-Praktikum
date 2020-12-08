@@ -1,5 +1,5 @@
 /*
- * TASK4.H
+ * TASK4.hpp
  *
  *  Created on: 23.09.2019
  *      Author: aml
@@ -9,14 +9,14 @@
 
 /**
  *
- * \file TASK4.H
+ * \file TASK4.hpp
  *
  * \brief Contains namespace TASK4. Namespace TASK4 contains simple demos / examples for thread programming.
  *
  */
 
-#ifndef TASK4_H_
-#define TASK4_H_
+#ifndef TASK4_hpp_
+#define TASK4_hpp_
 
 #include <string>
 #include <pthread.h>
@@ -47,4 +47,4 @@ void *procB(void* msg);
 
 
 
-#endif /* TASK4_H_ */
+#endif /* TASK4_hpp_ */

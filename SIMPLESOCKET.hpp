@@ -1,5 +1,5 @@
 /*
- * SIMPLESOCKET.H
+ * SIMPLESOCKET.hpp
  *
  *  Created on: 10.09.2019
  *      Author: aml
@@ -7,15 +7,15 @@
 
 /**
  *
- * \file SIMPLESOCKET.H
+ * \file SIMPLESOCKET.hpp
  *
  * \brief Contains the definition of the classes
  * for a TCP/IP client und server.
  *
  */
 
-#ifndef SIMPLESOCKET_H_
-#define SIMPLESOCKET_H_
+#ifndef SIMPLESOCKET_hpp_
+#define SIMPLESOCKET_hpp_
 
 #include <string>
 #include <arpa/inet.h> //inet_addr
@@ -154,4 +154,4 @@ private:
 
 
 
-#endif /* SIMPLESOCKET_H_ */
+#endif /* SIMPLESOCKET_hpp_ */

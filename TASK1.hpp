@@ -1,5 +1,5 @@
 /*
- * TASK1.H
+ * TASK1.hpp
  *
  *  Created on: 10.09.2019
  *      Author: aml
@@ -8,7 +8,7 @@
 
 /**
  *
- * \file TASK1.H
+ * \file TASK1.hpp
  *
  * \brief Contains namespace TASK1. Namespace TASK1 contains the implementation
  * of check sum calculation.
@@ -17,8 +17,8 @@
 
 
 
-#ifndef TASK1_H_
-#define TASK1_H_
+#ifndef TASK1_hpp_
+#define TASK1_hpp_
 
 #include <string>
 
@@ -129,4 +129,4 @@ void demoTASK1_01();
 } // end namespace TASK1
 
 
-#endif /* TASK1_H_ */
+#endif /* TASK1_hpp_ */

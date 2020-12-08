@@ -1,5 +1,5 @@
 /*
- * TASK4.C
+ * TASK4.cpp
  *
  *  Created on: 23.09.2019
  *      Author: aml
@@ -12,7 +12,7 @@
 #include <unistd.h>
 
 
-#include "TASK4.H"
+#include "TASK4.hpp"
 
 using namespace std;
 

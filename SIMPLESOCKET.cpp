@@ -1,5 +1,5 @@
 /*
- * SIMPLSOCKET.C
+ * SIMPLSOCKET.cpp
  *
  *  Created on: 10.09.2019
  *      Author: aml
@@ -31,7 +31,7 @@ C++ client example using sockets
 
 
 
-#include "SIMPLESOCKET.H"
+#include "SIMPLESOCKET.hpp"
 
 using namespace std;
 

@@ -1,17 +1,17 @@
 /*
- * TASK6.H
+ * TASK6.hpp
  *
  *  Created on: 01.10.2019
  *      Author: aml
  */
 
-#ifndef TASK6_H_
-#define TASK6_H_
+#ifndef TASK6_hpp_
+#define TASK6_hpp_
 
 
 /**
  *
- * \file TASK6.H
+ * \file TASK6.hpp
  *
  * \brief Contains the namespace TASK6. Namespace TASK6 defines the interfaces
  * and classes for simple unit testing.
@@ -600,4 +600,4 @@ public:
 } // end namespace TASK6
 
 
-#endif /* TASK6_H_ */
+#endif /* TASK6_hpp_ */
