@@ -52,7 +52,7 @@ const string SYMBOLS = "ABCDEFGHIJKLMNOPQRTSTUVWXYZabcdefghijklmopqrstuvwxyz0123
  * \brief Defines the minimal length of a password
  *
  */
-const unsigned int MINIMAL_PWD_LENGTH = 4;
+const unsigned int MINIMAL_PWD_LENGTH = 1;
 
 /**
  *

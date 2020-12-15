@@ -8,6 +8,7 @@
 #include <cstdlib>
 #include <cstring>
 #include <iostream>
+#include <unistd.h>
 
 #include "TASK1.hpp"
 #include "SHA256.hpp"
@@ -54,7 +55,6 @@ string BlackBoxUnsafe::randomPwd(int l){
 BlackBoxSafe::BlackBoxSafe(int pwdLength, int symbSetSize) :
 	BlackBoxUnsafe(pwdLength, symbSetSize){
 		checkSum_ = sha256(pwd_);
-		pwd_ = string("");
 		return;
 	}
 
