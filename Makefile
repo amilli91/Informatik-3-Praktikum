@@ -1,15 +1,23 @@
 CC=g++
 
-CFLAGS=$(shell pkg-config --cflags opencv) 
-LIBS=$(shell pkg-config --libs opencv) 
+//CFLAGS=$(shell pkg-config --cflags opencv) 
+//LIBS=$(shell pkg-config --libs opencv) 
 
 OBJS= main.o  TASK1.o TASK2.o TASK4.o SHA256.o SIMPLESOCKET.o
-DEMOTARGET=main server client mainTest
+OBJS1= passwordServer.o TASK1.o SHA256.o SIMPLESOCKET.o
+DEMOTARGET=main server client mainTest passwordServer passwordClient
+PWDTARGET=passwordClient passwordServer
 
 client.o:	client.cpp
 	$(CC) -c $<  -std=c++11
 
 server.o:	server.cpp
+	$(CC) -c $<  -std=c++11
+
+passwordServer.o:	passwordServer.cpp
+	$(CC) -c $<  -std=c++11
+
+passwordClient.o:	passwordClient.cpp
 	$(CC) -c $<  -std=c++11
 
 SIMPLESOCKET.o:	SIMPLESOCKET.cpp
@@ -41,11 +49,20 @@ main:	$(OBJS)
 mainTest:	mainTest.o
 	$(CC) -o $@ $^ TASK1.o SHA256.o -L/usr/lib/x86_64-linux-gnu -ldl -lstdc++  -std=c++11 -lpthread $(LIBS)
 
+passwordServer:	$(OBJS1)
+	$(CC) -o $@ $^ -L/usr/lib/x86_64-linux-gnu -ldl -lstdc++  -std=c++11
+
+passwordClient: passwordClient.o SIMPLESOCKET.o
+	$(CC) -o $@ $^ -L/usr/lib/x86_64-linux-gnu -ldl -lstdc++  -std=c++11 
+
 server:	server.o
 	$(CC) -o server server.o  SIMPLESOCKET.o -L/usr/lib/x86_64-linux-gnu -ldl -lstdc++  -std=c++11
 
 client:	client.o
 	$(CC) -o client client.o SIMPLESOCKET.o -L/usr/lib/x86_64-linux-gnu -ldl -lstdc++  -std=c++11
+
+password:	$(PWDTARGET)
+	make passwordServer && make passwordClient
 
 clean:
 	-rm -r -f   $(DEMOTARGET) *.o DOXYGENDOC  *.txt
@@ -55,7 +72,7 @@ doc:
 
 
 all:	$(DEMOTARGET)
-	make clean  && make main && make server && make client && make mainTest
+	make clean  && make main && make server && make client && make mainTest && make passwordServer && make passwordClient
 
 run:	main	
 	./main
