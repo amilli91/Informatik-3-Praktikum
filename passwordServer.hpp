@@ -10,21 +10,29 @@
 #define passwordServer_hpp_
 
 #include "SIMPLESOCKET.hpp"
-#include "SHA256.hpp"
 #include "TASK1.hpp"
 
 class PwdServer : public TCPserver{
-    public:
-
-        PwdServer(int port, int maxDataSizeRecv) :
-            TCPserver(port, maxDataSizeRecv){
-                
-            }
-
     protected:
 
-        TASK1::BlackBoxSafe BlackBoxSafe_; 
-        virtual string myResponse(string input);
+        TASK1::BlackBoxSafe *ptrBBS_; 
+        //virtual string myResponse(string input);
+
+    public:
+
+        PwdServer(int port, int maxDataSizeRecv, int pwdLength, int symbSetSize) :
+            TCPserver(port, maxDataSizeRecv){
+                ptrBBS_ = new TASK1::BlackBoxSafe(pwdLength, symbSetSize);
+            }
+
+        ~PwdServer(){
+            delete [] dataRecv_;
+            if(ptrBBS_ != NULL){
+                delete ptrBBS_;
+            }
+            return;
+        }
+    
 
 
 
