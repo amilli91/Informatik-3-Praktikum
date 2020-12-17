@@ -54,9 +54,10 @@ string BlackBoxUnsafe::randomPwd(int l){
 
 BlackBoxSafe::BlackBoxSafe(int pwdLength, int symbSetSize) :
 	BlackBoxUnsafe(pwdLength, symbSetSize){
-		checkSum_ = sha256(pwd_);
-		return;
-	}
+	checkSum_ = sha256(pwd_);
+	pwd_ = string("");
+	return;
+}
 
 string BlackBoxSafe::input(string strPwd){
 	if(checkSum_.compare(sha256(strPwd)) == 0){

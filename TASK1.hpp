@@ -43,7 +43,7 @@ namespace TASK1{
  *	\brief This contains all possible characters a password can contain
  *
  */
-const string SYMBOLS = "ABCDEFGHIJKLMNOPQRTSTUVWXYZabcdefghijklmopqrstuvwxyz0123456789";
+const string SYMBOLS = "ABCDEFGHIJKLMNOPQRTSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
 
 /**
  *
@@ -86,7 +86,7 @@ public:
 
 protected:
 	string randomPwd(int pwdLength);
-	char * charSymbArray_;
+	char  *charSymbArray_;
 	int    lengthSymbArray_;
 };
 
@@ -103,10 +103,11 @@ protected:
  */
 class BlackBoxSafe : public BlackBoxUnsafe{
 	public:
+		string checkSum_;
+
+	public:
 		BlackBoxSafe(int pwdLength, int symbSetSize);
 		string input(string strPwd);
-
-		string checkSum_;
 };
 
 
