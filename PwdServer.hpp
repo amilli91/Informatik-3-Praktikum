@@ -17,32 +17,11 @@ class PwdServer : public TCPserver{
         TASK1::BlackBoxSafe *ptrBBS_; 
 
     public:
-        PwdServer(int port, int maxDataSizeRecv, int pwdLength, int symbSetSize) :
-            TCPserver(port, maxDataSizeRecv){
-                ptrBBS_ = new TASK1::BlackBoxSafe(pwdLength, symbSetSize);
-            }
+             PwdServer(int port, int maxDataSizeRecv, int pwdLength, int symbSetSize);
+            ~PwdServer();
 
-        ~PwdServer(){
-            if(dataRecv_ != NULL){
-                delete [] dataRecv_;
-            }
-            if(ptrBBS_ != NULL){
-                delete ptrBBS_;
-            }
-            return;
-        }
-
-        void run();
-
-    private:
-
-        string response
-
-    
-
-
-
-
+    protected:
+        string myResponse(string input);
 };
 
 #endif /* PwdServer_hpp_ */
