@@ -4,9 +4,9 @@ CC=g++
 //LIBS=$(shell pkg-config --libs opencv) 
 
 OBJS= main.o  TASK1.o TASK2.o TASK4.o SHA256.o SIMPLESOCKET.o
-OBJS1= passwordServer.o TASK1.o SHA256.o SIMPLESOCKET.o
-DEMOTARGET=main server client mainTest passwordServer passwordClient
-PWDTARGET=passwordClient passwordServer
+PWDOBJS=PwdServerApp.o PwdServer.o TASK1.o SHA256.o SIMPLESOCKET.o
+ALLTARGET=main server client mainTest PwdClient PwdServerApp
+PWDTARGET=PwdClient PwdServerApp
 
 client.o:	client.cpp
 	$(CC) -c $<  -std=c++11
@@ -14,10 +14,13 @@ client.o:	client.cpp
 server.o:	server.cpp
 	$(CC) -c $<  -std=c++11
 
-passwordServer.o:	passwordServer.cpp
+PwdServer.o:	PwdServer.cpp
 	$(CC) -c $<  -std=c++11
 
-passwordClient.o:	passwordClient.cpp
+PwdClient.o:	PwdClient.cpp
+	$(CC) -c $<  -std=c++11
+
+PwdServerApp.o:	PwdServerApp.cpp
 	$(CC) -c $<  -std=c++11
 
 SIMPLESOCKET.o:	SIMPLESOCKET.cpp
@@ -49,11 +52,11 @@ main:	$(OBJS)
 mainTest:	mainTest.o
 	$(CC) -o $@ $^ TASK1.o SHA256.o -L/usr/lib/x86_64-linux-gnu -ldl -lstdc++  -std=c++11 -lpthread $(LIBS)
 
-passwordServer:	$(OBJS1)
-	$(CC) -o $@ $^ -L/usr/lib/x86_64-linux-gnu -ldl -lstdc++  -std=c++11
-
-passwordClient: passwordClient.o SIMPLESOCKET.o
+PwdClient: PwdClient.o SIMPLESOCKET.o
 	$(CC) -o $@ $^ -L/usr/lib/x86_64-linux-gnu -ldl -lstdc++  -std=c++11 
+
+PwdServerApp: $(PWDOBJS)
+	$(CC) -o $@ $^ -L/usr/lib/x86_64-linux-gnu -ldl -lstdc++  -std=c++11
 
 server:	server.o
 	$(CC) -o server server.o  SIMPLESOCKET.o -L/usr/lib/x86_64-linux-gnu -ldl -lstdc++  -std=c++11
@@ -61,18 +64,17 @@ server:	server.o
 client:	client.o
 	$(CC) -o client client.o SIMPLESOCKET.o -L/usr/lib/x86_64-linux-gnu -ldl -lstdc++  -std=c++11
 
-password:	$(PWDTARGET)
-	make passwordServer && make passwordClient
+Pwd:	$(PWDTARGET)
+	make clean && make PwdClient && make PwdServerApp
 
 clean:
-	-rm -r -f   $(DEMOTARGET) *.o DOXYGENDOC  *.txt
+	-rm -r -f   $(ALLTARGET) *.o DOXYGENDOC  *.txt
 
 doc:
 	doxygen Doxyfile 
 
-
-all:	$(DEMOTARGET)
-	make clean  && make main && make server && make client && make mainTest && make passwordServer && make passwordClient
+all:	$(ALLTARGET)
+	make clean  && make main && make server && make client && make mainTest && make PwdClient && make PwdServerApp
 
 run:	main	
 	./main
