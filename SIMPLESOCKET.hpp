@@ -147,7 +147,7 @@ private:
 	 * \return string containing the response of the server.
 	 *
 	 */
-	string response(string incomingMsg);
+	virtual string response(string incomingMsg);
 
 };
 

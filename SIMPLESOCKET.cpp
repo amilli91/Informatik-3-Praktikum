@@ -169,13 +169,14 @@ void TCPserver::run(){
 }
 
 TCPserver::~TCPserver(){
-	delete [] dataRecv_;
+	if(dataRecv_ = NULL){
+		delete [] dataRecv_;
+	}
 }
 
 string TCPserver::response(string incomingMsg){
 	string msg;
 	if(incomingMsg.compare(0,6,"BYEBYE") == 0){
-		cout << "asked to close server\n";
 		msg = string("BYEBYE"); // this return value
 		                        // will close server connections
 	}else{

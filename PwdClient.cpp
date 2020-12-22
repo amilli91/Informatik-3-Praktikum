@@ -44,7 +44,11 @@ int main(int argc, char *argv[]){
     std::cout << "client sends:" << pwd << endl;
     c.sendData(pwd);
     std::cout << "got response:" << c.receive(32) << endl;
-   
+
+    std::cout << "client sends:BYEBYE!" << endl;
+    c.sendData("BYEBYE!");
+    std::cout << "got response:" << c.receive(32) << endl;
+
     return 0;
 }
 

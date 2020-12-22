@@ -18,7 +18,7 @@ PwdServer::PwdServer(int port, int maxDataSizeRecv, int pwdLength, int symbSetSi
 
 PwdServer::~PwdServer(){
     if(dataRecv_ != NULL){
-    delete [] dataRecv_;
+        delete [] dataRecv_;
     }
     if(ptrBBS_ != NULL){
         delete ptrBBS_;
@@ -26,7 +26,19 @@ PwdServer::~PwdServer(){
     return;
 }
 
+string PwdServer::response(string incomingMsg){
+    string msg;
+    if(incomingMsg.compare(0,7,"BYEBYE!") == 0){
+        msg = string("BYEBYE!");
+    }else{
+        msg = myResponse(incomingMsg);
+    }
 
+    cout << "received :" << incomingMsg << endl;
+    cout << "send back:" << msg << endl;
+
+    return msg;
+}
 
 string PwdServer::myResponse(string input){
     return string(ptrBBS_->input(input));

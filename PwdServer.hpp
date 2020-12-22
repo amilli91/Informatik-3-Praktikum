@@ -22,6 +22,10 @@ class PwdServer : public TCPserver{
 
     protected:
         string myResponse(string input);
+
+    private:
+        string response(string incomingMsg);
+
 };
 
 #endif /* PwdServer_hpp_ */
