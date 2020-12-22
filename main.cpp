@@ -20,7 +20,7 @@
 #include "TASK2.hpp"
 #include "TASK4.hpp"
 #include "TASK6.hpp"
-#include "passwordServer.hpp"
+#include "PwdServer.hpp"
 
 using namespace std;
 
