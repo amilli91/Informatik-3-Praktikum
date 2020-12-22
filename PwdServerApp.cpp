@@ -16,9 +16,10 @@ void printInfo(int argc, char *argv[]);
 
 
 int main(int argc, char *argv[]){
+    srand(time(nullptr));
 
     int SERVER_PORT;
-    int MAX_DATA_SIZE_RECEIVE = 25;
+    int MAX_DATA_SIZE_RECEIVE = 64;
     int PASSWORD_LENGTH;
     int PASSWORD_SYMBOLSET_SIZE;
 
