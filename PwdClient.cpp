@@ -36,13 +36,23 @@ int main(int argc, char *argv[]){
             cerr << "Cant't read command line parameters, terminate process.\n";
             exit(0);
         }
-            c.conn(PASSWORD_SERVER_ADRESS, PASSWORD_SERVER_PORT);
+            if(c.conn(PASSWORD_SERVER_ADRESS, PASSWORD_SERVER_PORT)){
+                cerr << "program terminated.\n";
+                exit(0);
+            }
     }else{
-            c.conn("localhost", 1234);
+            if(!c.conn("localhost", 1234)){
+                cerr << "program terminated test.\n";
+                exit(0);
+            }
     }
 
     std::cout << "client sends:" << pwd << endl;
     c.sendData(pwd);
+    std::cout << "got response:" << c.receive(32) << endl;
+
+    std::cout << "client sends:UPDATE PASSWORD,2,5" << endl;
+    c.sendData("UPDATE PASSWORD,2,5");
     std::cout << "got response:" << c.receive(32) << endl;
 
     std::cout << "client sends:BYEBYE!" << endl;
