@@ -55,8 +55,18 @@ string BlackBoxUnsafe::randomPwd(int l){
 BlackBoxSafe::BlackBoxSafe(int pwdLength, int symbSetSize) :
 	BlackBoxUnsafe(pwdLength, symbSetSize){
 	checkSum_ = sha256(pwd_);
+	
+	cout << pwd_ << endl;
+	cout << checkSum_ << endl;
+
 	pwd_ = string("");
 	return;
+}
+
+BlackBoxSafe::~BlackBoxSafe(){
+	if(charSymbArray_ != NULL){
+		delete [] charSymbArray_;
+	}
 }
 
 string BlackBoxSafe::input(string strPwd){
