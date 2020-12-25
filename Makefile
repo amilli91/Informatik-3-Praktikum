@@ -5,8 +5,8 @@ CC=g++
 
 OBJS= main.o  TASK1.o TASK2.o TASK4.o SHA256.o SIMPLESOCKET.o
 PWDOBJS=PwdServerApp.o PwdServer.o TASK1.o SHA256.o SIMPLESOCKET.o
-ALLTARGET=main server client mainTest PwdClient PwdServerApp
-PWDTARGET=PwdClient PwdServerApp
+ALLTARGET=main server client mainTest PwdClientApp PwdServerApp
+PWDTARGET=PwdClientApp PwdServerApp
 
 client.o:	client.cpp
 	$(CC) -c $<  -std=c++11
@@ -21,6 +21,9 @@ PwdClient.o:	PwdClient.cpp
 	$(CC) -c $<  -std=c++11
 
 PwdServerApp.o:	PwdServerApp.cpp
+	$(CC) -c $<  -std=c++11
+
+PwdClientApp.o:	PwdClientApp.cpp
 	$(CC) -c $<  -std=c++11
 
 SIMPLESOCKET.o:	SIMPLESOCKET.cpp
@@ -52,7 +55,7 @@ main:	$(OBJS)
 mainTest:	mainTest.o
 	$(CC) -o $@ $^ TASK1.o SHA256.o -L/usr/lib/x86_64-linux-gnu -ldl -lstdc++  -std=c++11 -lpthread $(LIBS)
 
-PwdClient: PwdClient.o SIMPLESOCKET.o
+PwdClientApp: PwdClientApp.o PwdClient.o SIMPLESOCKET.o
 	$(CC) -o $@ $^ -L/usr/lib/x86_64-linux-gnu -ldl -lstdc++  -std=c++11 
 
 PwdServerApp: $(PWDOBJS)
@@ -65,7 +68,7 @@ client:	client.o
 	$(CC) -o client client.o SIMPLESOCKET.o -L/usr/lib/x86_64-linux-gnu -ldl -lstdc++  -std=c++11
 
 Pwd:	$(PWDTARGET)
-	make clean && make PwdClient && make PwdServerApp
+	make clean && make PwdClientApp && make PwdServerApp
 
 clean:
 	-rm -r -f   $(ALLTARGET) *.o DOXYGENDOC  *.txt
