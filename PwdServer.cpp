@@ -67,8 +67,6 @@ string PwdServer::myResponse(string input){
 }
 
 void PwdServer::flush(){
-    if(dataRecv_ != NULL){
-        delete [] dataRecv_;
-        dataRecv_ = new char[maxDataSizeRecv_];
-    }
+    delete [] dataRecv_;
+    dataRecv_ = new char[maxDataSizeRecv_];   
 }
