@@ -18,31 +18,32 @@ void printInfo(int argc, char *argv[]);
 int main(int argc, char *argv[]){
     srand(time(nullptr));
 
-    int SERVER_PORT;
-    int MAX_DATA_SIZE_RECEIVE = 64;
-    int PASSWORD_LENGTH;
-    int PASSWORD_SYMBOLSET_SIZE;
+    int SERVER_PORT = 1234;
+    int MAX_DATA_SIZE_RECEIVE = 32;
+    int PASSWORD_LENGTH = 1;
+    int PASSWORD_SYMBOLSET_SIZE = 62;
 
     printInfo(argc, argv);
-
-    try{
-        SERVER_PORT              = atoi(argv[1]);
-        PASSWORD_LENGTH          = atoi(argv[2]);
-        PASSWORD_SYMBOLSET_SIZE  = atoi(argv[3]);
-    }catch(...){
-        cerr << "Can't read all parameter values, terminate programm.\n\n";
-        exit(0);
+    if(argc > 1){
+        try{
+            SERVER_PORT              = atoi(argv[1]);
+            PASSWORD_LENGTH          = atoi(argv[2]);
+            PASSWORD_SYMBOLSET_SIZE  = atoi(argv[3]);
+        }catch(...){
+            cerr << "Can't read all parameter values, terminate programm.\n\n";
+            exit(0);
+        }
     }
 
-    PwdServer pSvr(SERVER_PORT, MAX_DATA_SIZE_RECEIVE, PASSWORD_LENGTH, PASSWORD_SYMBOLSET_SIZE);
+    PwdServer pwdSvr(SERVER_PORT, MAX_DATA_SIZE_RECEIVE, PASSWORD_LENGTH, PASSWORD_SYMBOLSET_SIZE);
     
-    pSvr.run();
+    pwdSvr.run();
 
     return 0;
 }
 
 void printInfo(int argc, char *argv[]){
-    if(argc == 4){
+    if(argc == 4 || argc == 1){
         return;
     }else{
         cerr << "Usage of " << argv[0] << " : \n\n"
