@@ -11,5 +11,19 @@
 
 #include "SIMPLESOCKET.hpp"
 
+const string SYMBOLS = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+
+class PwdClient : public TCPclient{
+    protected:
+        char *charSymbArray_;
+        int  lengthSymbArray_;
+        int pwdLength_;
+
+    public:
+        PwdClient(int pwdLength, int symbSetSize);
+        ~PwdClient();
+        int bruteForce();
+        
+};
 
 #endif /* PwdClient_hpp_ */
