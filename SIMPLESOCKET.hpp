@@ -118,7 +118,7 @@ public:
 	 * \brief Starts the server.
 	 *
 	 */
-	void run();
+	virtual void run();
 
 protected:
 	const char   *dataSend_;
@@ -147,7 +147,7 @@ private:
 	 * \return string containing the response of the server.
 	 *
 	 */
-	virtual string response(string incomingMsg);
+	string response(string incomingMsg);
 
 };
 
