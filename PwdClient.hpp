@@ -16,13 +16,13 @@ const string SYMBOLS = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123
 class PwdClient : public TCPclient{
     protected:
         char *charSymbArray_;
-        int  lengthSymbArray_;
-        int pwdLength_;
+        unsigned int lengthSymbArray_;
+        unsigned int pwdLength_;
 
     public:
         PwdClient(int pwdLength, int symbSetSize);
         ~PwdClient();
-        int bruteForce();
+        unsigned int bruteForce();
         
 };
 
