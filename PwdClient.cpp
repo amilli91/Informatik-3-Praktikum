@@ -10,6 +10,8 @@
 #include <cstring>
 #include <math.h>
 
+//HALLO DIES IST EIN KLEINER ETST
+
 #include "PwdClient.hpp"
 
 PwdClient::PwdClient(int pwdLength, int symbSetSize):
