@@ -6,12 +6,39 @@
  * 
  */
 
+/**
+ *
+ * \file PwdClient.hpp
+ *
+ * \brief Contains class definitions of different 
+ * password client implementations.
+ *
+ */
+
+
 #ifndef PwdClient_hpp_
 #define PwdClient_hpp_
 
 #include "SIMPLESOCKET.hpp"
 
+/**
+ *
+ * \var const string SYMBOLS
+ *
+ *	\brief This contains all possible characters a password can contain
+ *
+ */
+
 const string SYMBOLS = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+
+/**
+ *
+ * \class PwdClient
+ *
+ *	\brief Implements the client class, which connects to PwdServer 
+ and tries to guess the right password.
+ *
+ */
 
 class PwdClient : public TCPclient{
     protected:
