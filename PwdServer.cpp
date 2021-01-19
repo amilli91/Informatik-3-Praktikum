@@ -35,7 +35,6 @@ string PwdServer::response(string incomingMsg){
     }
 
     cout << "send back:" << msg << endl;
-    cout << "test" << endl;
 
     this->flush();
     return msg;

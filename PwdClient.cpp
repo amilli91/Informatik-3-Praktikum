@@ -89,6 +89,8 @@ unsigned int PwdClient::bruteForce(){
     pwdGuess = string("");
     
     if(pwdLength_ > 0){
+        unsigned maxPwdNmb = unsigned(pow(float(lengthSymbArray_), float(pwdLength_)));
+
         for(unsigned int i = 0; i < pwdLength_; i++){
             pwdGuess += charSymbArray_[0];
         }
@@ -111,7 +113,7 @@ unsigned int PwdClient::bruteForce(){
 
             n++;
 
-        }while(response.compare("ACCESS GRANTED") != 0);
+        }while( (response.compare("ACCESS GRANTED") != 0) && (n != maxPwdNmb) );
 
         foundPwdLength_ = pwdGuess.length();
         return unsigned(n);
