@@ -6,6 +6,15 @@
  * 
  */
 
+/**
+ *
+ * \file PwdServer.hpp
+ *
+ * \brief Contains class definitions of different 
+ * password server implementations.
+ *
+ */
+
 #ifndef PwdServer_hpp_
 #define PwdServer_hpp_
 
@@ -13,6 +22,16 @@
 
 #include "SIMPLESOCKET.hpp"
 #include "TASK1.hpp"
+
+/**
+ *
+ * \class PwdServer
+ *
+ * \brief Implements the server class, which is connected by
+ * the Client. The Server sets the password and encodes it with
+ * an hash-function.
+ *
+ */
 
 class PwdServer : public TCPserver{
     protected:
@@ -29,11 +48,26 @@ class PwdServer : public TCPserver{
 
 };
 
+/**
+ *
+ * \class PwdServerSingleThread
+ *
+ * \brief Implements the single thread class, which  XXXXX
+ *
+ */
 
 class PwdServerSingleThread : public PwdServer{
     public: 
         PwdServerSingleThread(int port, int maxDataSizeRecv, int pwdLength, int SymbSetSize);
 };
+
+/**
+ *
+ * \class PwdServerMultiThread
+ *
+ * \brief Implements the multi thread class, which XXXX
+ *
+ */
 
 class PwdServerMultiThread{
     protected:
