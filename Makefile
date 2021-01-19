@@ -71,7 +71,7 @@ Pwd:	$(PWDTARGET)
 	make clean && make PwdClientApp && make PwdServerApp
 
 clean:
-	-rm -r -f   $(ALLTARGET) *.o DOXYGENDOC  *.txt
+	-rm -r -f   $(ALLTARGET) *.o DOXYGENDOC
 
 doc:
 	doxygen Doxyfile 

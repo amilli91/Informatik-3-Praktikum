@@ -18,11 +18,17 @@ class PwdClient : public TCPclient{
         char *charSymbArray_;
         unsigned int lengthSymbArray_;
         unsigned int pwdLength_;
+        unsigned int foundPwdLength_;
 
     public:
         PwdClient(int pwdLength, int symbSetSize);
         ~PwdClient();
         unsigned int bruteForce();
+        unsigned int getLength();
+        bool setLength(int newLength);
+        unsigned int getSymbSetSize();
+        bool setSymbSetSize(int newSize);
+        unsigned int getFoundPwdLength();
         
 };
 

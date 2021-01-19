@@ -35,8 +35,9 @@ string PwdServer::response(string incomingMsg){
     }
 
     cout << "send back:" << msg << endl;
+    cout << "test" << endl;
 
-    flush();
+    this->flush();
     return msg;
 }
 
@@ -67,9 +68,11 @@ void PwdServer::flush(){
     //delete [] dataRecv_;
     //dataRecv_ = new char[maxDataSizeRecv_];
 
+    
     for(int i = 0; i < maxDataSizeRecv_; i++){
         dataRecv_[i] = '\0';
     }   
+    
 
     return;
 }
