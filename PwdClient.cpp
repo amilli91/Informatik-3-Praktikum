@@ -10,7 +10,6 @@
 #include <cstring>
 #include <math.h>
 
-//HALLO DIES IST EIN KLEINER ETST
 
 #include "PwdClient.hpp"
 
@@ -40,6 +39,47 @@ PwdClient::~PwdClient(){
     }
     return;
 }
+
+unsigned int PwdClient::getLength(){
+        return pwdLength_; 
+}
+
+bool PwdClient::setLength(int newLength){
+    if(newLength < 0){
+        return false;
+    }
+    newLength  = pwdLength_;
+        return true;
+}
+
+unsigned int PwdClient::getSymbSetSize(){
+    return lengthSymbArray_;
+}
+
+bool PwdClient::setSymbSetSize(int newSize){
+    if(newSize < 1){
+        return false;
+    }
+
+    if(newSize > SYMBOLS.length()){
+        lengthSymbArray_ = SYMBOLS.length();
+    }else{
+        lengthSymbArray_= newSize;
+    }
+    
+    if(charSymbArray_ != NULL){
+        delete [] charSymbArray_;
+    }
+    charSymbArray_ = new char [lengthSymbArray_ + 1];
+    strncpy(charSymbArray_, SYMBOLS.c_str(), lengthSymbArray_);
+
+    return true;
+}
+
+unsigned int PwdClient::getFoundPwdLength(){
+        return foundPwdLength_;
+}
+
 
 unsigned int PwdClient::bruteForce(){
     string pwdGuess, response;
@@ -73,6 +113,7 @@ unsigned int PwdClient::bruteForce(){
 
         }while(response.compare("ACCESS GRANTED") != 0);
 
+        foundPwdLength_ = pwdGuess.length();
         return unsigned(n);
     }else{
         unsigned int lengthJmp = lengthSymbArray_;
@@ -108,6 +149,7 @@ unsigned int PwdClient::bruteForce(){
 
         }while(response.compare("ACCESS GRANTED") != 0);
 
+        foundPwdLength_ = pwdGuess.length();
         return unsigned(n);
     }
 

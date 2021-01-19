@@ -25,8 +25,6 @@ class PwdServer : public TCPserver{
     protected:
         string myResponse(string input);
         void flush();
-
-    private:
         string response(string incomingMsg);
 
 };

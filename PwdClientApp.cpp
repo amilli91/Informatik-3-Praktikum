@@ -6,12 +6,14 @@
  */
 
 #include <iostream>
+#include <fstream>
 #include <cstdlib>
 #include <string.h>  //strcpy
 
 #include "PwdClient.hpp"
 
 void printInfo(int argc, char *argv[]);
+bool statistics(PwdClient *tmpClient);
 
 char DEFAULT_PASSWORD_SERVER_ADRESS[] = "localhost";
 char *PASSWORD_SERVER_ADRESS = DEFAULT_PASSWORD_SERVER_ADRESS;
@@ -46,19 +48,51 @@ int main(int argc, char *argv[]){
     }
 
     
-    cout << pwdClnt.bruteForce() << " tries needed." << endl;
-
+ /*   cout << pwdClnt.bruteForce() << " tries needed." << endl;
+    
     cout << "client sends:UPDATE PASSWORD[4,26]" << endl;
-    pwdClnt.sendData("UPDATE PASSWORD[4,26]");
     cout << "got response:" << pwdClnt.receive(32) << endl;
+*/
 
-
+    statistics(&pwdClnt);
     cout << "client sends:BYEBYE!" << endl;
     pwdClnt.sendData("BYEBYE!");
     cout << "got response:" << pwdClnt.receive(32) << endl;
     
 
     return 0;
+}
+
+bool statistics(PwdClient *tmpClient){
+ 
+    fstream test("Bruteforce_Stats.txt");
+    ofstream stats;
+    if(test.is_open()){
+        test.close();
+        stats.open("Bruteforce_Stats.txt", ios::app);
+    }else{
+        test.close();
+        stats.open("Bruteforce_Stats.txt");
+        stats << "Tries\tLength\tSize\t" << endl;
+    }
+
+    if(stats.good() != true){
+        printf("\n Die Datei Bruteforce_Stats.txt konnte nicht beschrieben werden \n \n");
+        return EXIT_FAILURE;
+    }
+
+    //stats << "Tries \t Length \t Size \n";
+
+    for(int i=0; i < 20; i++){
+        stats << tmpClient -> bruteForce() << "\t";
+        stats << tmpClient -> getFoundPwdLength() << "\t";
+        stats << tmpClient -> getSymbSetSize() << "\n";
+        cout << "client sends:UPDATE PASSWORD[1,62]" << endl;
+        tmpClient -> sendData("UPDATE PASSWORD[1,62]");
+        cout << "got response:" << tmpClient -> receive(32) << endl;
+    }
+    stats.close();
+    return true;    
 }
 
 void printInfo(int argc, char *argv[]){

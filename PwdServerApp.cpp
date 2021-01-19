@@ -45,7 +45,7 @@ int main(int argc, char *argv[]){
 }
 
 void printInfo(int argc, char *argv[]){
-    if(argc == 4){
+    if(argc == 5){
         return;
     }else if(argc == 1){
         char usrInput;
