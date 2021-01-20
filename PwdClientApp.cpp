@@ -59,7 +59,7 @@ int main(int argc, char *argv[]){
 */
 
     statistics(&pwdClnt);
-    cout << "client sends:BYEBYE!" << endl;
+    cout << endl << "client sends:BYEBYE!" << endl;
     pwdClnt.sendData("BYEBYE!");
     cout << "got response:" << pwdClnt.receive(32) << endl;
     
