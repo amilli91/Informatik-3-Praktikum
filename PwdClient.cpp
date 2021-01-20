@@ -9,6 +9,8 @@
 #include <cstdlib>
 #include <cstring>
 #include <math.h>
+#include <sstream>
+#include <string.h>
 
 
 #include "PwdClient.hpp"
@@ -48,7 +50,7 @@ bool PwdClient::setLength(int newLength){
     if(newLength < 0){
         return false;
     }
-    newLength  = pwdLength_;
+    pwdLength_  = newLength;
         return true;
 }
 
@@ -80,6 +82,23 @@ unsigned int PwdClient::getFoundPwdLength(){
         return foundPwdLength_;
 }
 
+bool PwdClient::sendUpdateRequest(int newLength, int newSize){
+    
+    string response;
+    stringstream communication;
+    
+    communication << "UPDATE PASSWORD[" << newLength << "," << newSize << "]";
+    this -> sendData(communication.str());
+    
+    response = this->receive(32);
+    if(response.compare("PASSWORD UPDATED") == 0){
+        this -> setSymbSetSize(newSize);
+        this -> setLength(newLength);
+        return true;
+    }
+    return false;
+}
+
 
 unsigned int PwdClient::bruteForce(){
     string pwdGuess, response;
@@ -105,11 +124,11 @@ unsigned int PwdClient::bruteForce(){
                 }
             }
 
-            cout << "client sends:" << pwdGuess << endl;
+            //cout << "client sends:" << pwdGuess << endl;
             this->sendData(pwdGuess);
 
             response = this->receive(32);
-            cout << "got response:" << response << endl;
+            //cout << "got response:" << response << endl;
 
             n++;
 

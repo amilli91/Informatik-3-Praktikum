@@ -56,8 +56,8 @@ BlackBoxSafe::BlackBoxSafe(int pwdLength, int symbSetSize) :
 	BlackBoxUnsafe(pwdLength, symbSetSize){
 	checkSum_ = sha256(pwd_);
 	
-	cout << pwd_ << endl;
-	cout << checkSum_ << endl;
+	//cout << pwd_ << endl;
+	//cout << checkSum_ << endl;
 
 	pwd_ = string("");
 	return;

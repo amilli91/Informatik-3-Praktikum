@@ -26,7 +26,7 @@ PwdServer::~PwdServer(){
 string PwdServer::response(string incomingMsg){
     string msg;
 
-    cout << "received:" << incomingMsg << endl;
+    //cout << "received:" << incomingMsg << endl;
 
     if(incomingMsg.compare(0,7,"BYEBYE!") == 0){
         msg = string("BYEBYE!");
@@ -34,7 +34,7 @@ string PwdServer::response(string incomingMsg){
         msg = myResponse(incomingMsg);
     }
 
-    cout << "send back:" << msg << endl;
+    //cout << "send back:" << msg << endl;
 
     this->flush();
     return msg;

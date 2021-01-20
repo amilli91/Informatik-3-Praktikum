@@ -86,16 +86,20 @@ bool statistics(PwdClient *tmpClient){
     }
 
     //stats << "Tries \t Length \t Size \n";
+    for(int l=1; l <= PASSWORD_SYMBOLSET_SIZE; l++){
 
-    stringstream communication;
-    communication << "UPDATE PASSWORD[" << PASSWORD_LENGTH << "," << PASSWORD_SYMBOLSET_SIZE << "]";
-
-    for(int i=0; i < PASSWORD_AUTOMATIC_QUEUE; i++){
-        stats << tmpClient -> bruteForce() << "\t";
-        stats << tmpClient -> getFoundPwdLength() << "\t";
-        stats << tmpClient -> getSymbSetSize() << "\n";
-        tmpClient -> sendData(communication.str());
-        cout << "got response:" << tmpClient -> receive(32) << endl;
+        for(int k=1; k <= PASSWORD_LENGTH; k++){
+        
+        
+            for(int i=0; i < PASSWORD_AUTOMATIC_QUEUE; i++){
+                tmpClient -> sendUpdateRequest(k, l);
+                stats << tmpClient -> bruteForce() << "\t";
+                stats << tmpClient -> getFoundPwdLength() << "\t";
+                stats << tmpClient -> getSymbSetSize() << "\n";
+                //        cout << "got response:" << tmpClient -> receive(32) << endl;
+            }
+            cout << "." << flush;
+        }
     }
     stats.close();
     return true;    

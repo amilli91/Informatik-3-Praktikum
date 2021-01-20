@@ -56,6 +56,7 @@ class PwdClient : public TCPclient{
         unsigned int getSymbSetSize();
         bool setSymbSetSize(int newSize);
         unsigned int getFoundPwdLength();
+        bool sendUpdateRequest(int newLength, int newSize);
         
 };
 
