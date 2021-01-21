@@ -68,6 +68,7 @@ int main(int argc, char *argv[]){
 }
 
 bool statistics(PwdClient *tmpClient){
+    int addedValues = 0;
  
     fstream test("Bruteforce_Stats.txt");
     ofstream stats;
@@ -77,7 +78,7 @@ bool statistics(PwdClient *tmpClient){
     }else{
         test.close();
         stats.open("Bruteforce_Stats.txt");
-        stats << "Tries\tLength\tSize\t" << endl;
+        stats << "Average\tLength\tSize\t" << endl;
     }
 
     if(stats.good() != true){
@@ -85,20 +86,26 @@ bool statistics(PwdClient *tmpClient){
         return EXIT_FAILURE;
     }
 
-    //stats << "Tries \t Length \t Size \n";
     for(int l=1; l <= PASSWORD_SYMBOLSET_SIZE; l++){
 
         for(int k=1; k <= PASSWORD_LENGTH; k++){
-        
+            
         
             for(int i=0; i < PASSWORD_AUTOMATIC_QUEUE; i++){
                 tmpClient -> sendUpdateRequest(k, l);
-                stats << tmpClient -> bruteForce() << "\t";
-                stats << tmpClient -> getFoundPwdLength() << "\t";
-                stats << tmpClient -> getSymbSetSize() << "\n";
+                addedValues = addedValues + tmpClient -> bruteForce();
+                //stats << tmpClient -> bruteForce() << "\t";
+                //stats << tmpClient -> getFoundPwdLength() << "\t";
+                //stats << tmpClient -> getSymbSetSize() << "\n";
                 //        cout << "got response:" << tmpClient -> receive(32) << endl;
+            cout << "#" << flush;
             }
-            cout << "." << flush;
+            stats << (addedValues / PASSWORD_AUTOMATIC_QUEUE) << "\t";
+            stats << tmpClient -> getFoundPwdLength() << "\t";
+            stats << tmpClient -> getSymbSetSize() << "\n";
+            addedValues = 0;
+            cout << "\n" << flush;
+
         }
     }
     stats.close();
