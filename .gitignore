@@ -37,3 +37,10 @@
 
 #VSCode files 
 *.json
+
+#Folders
+DOXYGENDOC
+.vscode/settings.json
+
+PwdServerApp
+PwdClientApp
