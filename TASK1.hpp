@@ -109,6 +109,7 @@ class BlackBoxSafe : public BlackBoxUnsafe{
 		BlackBoxSafe(int pwdLength, int symbSetSize);
 		~BlackBoxSafe();
 		string input(string strPwd);
+		void updatePwd(int pwdLength, int symbSetSize);
 };
 
 

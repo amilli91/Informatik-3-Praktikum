@@ -56,22 +56,22 @@ mainTest:	mainTest.o
 	$(CC) -o $@ $^ TASK1.o SHA256.o -L/usr/lib/x86_64-linux-gnu -ldl -lstdc++  -std=c++11 -lpthread $(LIBS)
 
 PwdClientApp: PwdClientApp.o PwdClient.o SIMPLESOCKET.o
-	$(CC) -o $@ $^ -L/usr/lib/x86_64-linux-gnu -ldl -lstdc++  -std=c++11 -lpthread 
+	$(CC) -o $@ $^ -L/usr/lib/x86_64-linux-gnu -ldl -lstdc++  -std=c++11 -lpthread -O3
 
 PwdServerApp: $(PWDOBJS)
-	$(CC) -o $@ $^ -L/usr/lib/x86_64-linux-gnu -ldl -lstdc++  -std=c++11 -lpthread 
+	$(CC) -o $@ $^ -L/usr/lib/x86_64-linux-gnu -ldl -lstdc++  -std=c++11 -lpthread -O3
 
 server:	server.o
-	$(CC) -o server server.o  SIMPLESOCKET.o -L/usr/lib/x86_64-linux-gnu -ldl -lstdc++  -std=c++11
+	$(CC) -o server server.o  SIMPLESOCKET.o -L/usr/lib/x86_64-linux-gnu -ldl -lstdc++  -std=c++11 -O3
 
 client:	client.o
-	$(CC) -o client client.o SIMPLESOCKET.o -L/usr/lib/x86_64-linux-gnu -ldl -lstdc++  -std=c++11
+	$(CC) -o client client.o SIMPLESOCKET.o -L/usr/lib/x86_64-linux-gnu -ldl -lstdc++  -std=c++11 -O3
 
 Pwd:	$(PWDTARGET)
 	make clean && make PwdClientApp && make PwdServerApp
 
 clean:
-	-rm -r -f   $(ALLTARGET) *.o DOXYGENDOC
+	-rm -r -f   $(ALLTARGET) *.o DOXYGENDOC  *.txt
 
 doc:
 	doxygen Doxyfile 
@@ -81,4 +81,3 @@ all:	$(ALLTARGET)
 
 run:	main	
 	./main
-

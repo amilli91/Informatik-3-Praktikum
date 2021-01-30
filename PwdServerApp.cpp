@@ -8,8 +8,6 @@
 
 
 #include <iostream>
-#include <cstdlib>
-#include <thread>
 
 #include "PwdServer.hpp"
 
@@ -37,9 +35,13 @@ int main(int argc, char *argv[]){
         }
     }
 
-    PwdServerSingleThread pwdSvr(SERVER_PORT, MAX_DATA_SIZE_RECEIVE, PASSWORD_LENGTH, PASSWORD_SYMBOLSET_SIZE);
-    
-    pwdSvr.run();
+    try{
+        PwdServerMultiThread pwdSvr(SERVER_PORT, MAX_DATA_SIZE_RECEIVE, PASSWORD_LENGTH, PASSWORD_SYMBOLSET_SIZE, THREAD_COUNT);
+         pwdSvr.startServer();
+    }catch(string s){
+        cout << "Error: " << s << endl;
+        exit(0);
+    }
 
     return 0;
 }
@@ -50,11 +52,13 @@ void printInfo(int argc, char *argv[]){
     }else if(argc == 1){
         char usrInput;
 
+        cout << endl << "Usage of PwdServerApp : " << argv[0] << " <port> <password length> <password symbolset size> <thread count>" << endl;
+
         cout << "\n" << argv[0] << " will be initialized with these default parameters:\n\n"
              << "port:                          " << SERVER_PORT << "\t(port number this server listens on)\n"
              << "password length:               " << PASSWORD_LENGTH << "\t(number of characters in the generated password)\n"
              << "password symbolset size:       " << PASSWORD_SYMBOLSET_SIZE << "\t(number of different symbols for generating the password)\n"
-             << "thread count:                  " << THREAD_COUNT << "\t(number of simultaneulsy available communication channels\n\n";
+             << "thread count:                  " << THREAD_COUNT << "\t(number of simultaneously available communication channels)\n\n";
 
         cout << "Do you want to continue?\n"
              << "[y,n] ";
@@ -68,9 +72,9 @@ void printInfo(int argc, char *argv[]){
         }
       
     }else{
-        cerr << "Usage of " << argv[0] << " : \n\n"
-             << argv[0] << " <port> <password length> <password symbolset size> " << endl;
-        cerr << "\n"
+        cout << "Usage of " << argv[0] << " : \n\n"
+             << argv[0] << " <port> <password length> <password symbolset size> <thread count>" << endl;
+        cout << "\n"
              << "<port>                         port number this server listens on\n"
              << "<password length>              number of characters in the generated password\n"
              << "<password symbolset size>      number of different symbols for generating the password\n" 
