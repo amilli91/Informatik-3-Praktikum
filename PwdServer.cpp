@@ -140,7 +140,6 @@ void PwdServerMultiThread::startServer(){
                 }
         }
             
-        cout << "after joining" << endl;
     }catch(...){
         cerr << "Error. terminate programm " << endl;
         exit(0);
