@@ -39,26 +39,40 @@ int main(int argc, char *argv[]){
             exit(0);
         }         
     }
-    passwordSelection();
 
-    PwdClientMultiThread pwdClnt(THREAD_COUNT, PASSWORD_LENGTH, PASSWORD_SYMBOLSET_SIZE);
-
-
-    if(!pwdClnt.connect(PASSWORD_SERVER_ADRESS, PASSWORD_SERVER_PORT)){
+    try{
+        PwdClientMultiThread pwdClnt(THREAD_COUNT, PASSWORD_LENGTH, PASSWORD_SYMBOLSET_SIZE);
+        
+        if(!pwdClnt.connect(PASSWORD_SERVER_ADRESS, PASSWORD_SERVER_PORT)){
         cerr << "program terminated.\n";
         exit(0);
+        }
+
+        char usrInput;
+        cout << "Do you want to want to create a bruteForce statistic?\n"
+             << "[y,n] ";
+        cin >> usrInput;
+
+        if(usrInput == 'y' || usrInput == 'Y'){
+            statistics(&pwdClnt);
+
+            cout << "client sends:BYEBYE!" << endl;
+            pwdClnt.disconnect();
+        }else{
+
+            cout << pwdClnt.bruteForce() << " tries needed." << endl;
+
+            cout << "client sends:BYEBYE!" << endl;
+            pwdClnt.disconnect();
+        }
+
+    }catch(string s){
+        cout << "Error: " << s << endl;
+        exit(0);
+    }catch(...){
+        cout << "Unknown Error occured!" << endl;
+        exit(0);
     }
-
-    
- /*   cout << pwdClnt.bruteForce() << " tries needed." << endl;
-    
-    cout << "client sends:UPDATE PASSWORD[4,26]" << endl;
-    cout << "got response:" << pwdClnt.receive(32) << endl;
-*/
-
-    statistics(&pwdClnt);
-    
-    pwdClnt.disconnect();
     
     return 0;
 }
@@ -90,10 +104,6 @@ bool statistics(PwdClientMultiThread *tmpClient){
             for(int i=0; i < PASSWORD_AUTOMATIC_QUEUE; i++){
                 tmpClient -> sendUpdateRequest(k, l);
                 addedValues = addedValues + tmpClient -> bruteForce();
-                //stats << tmpClient -> bruteForce() << "\t";
-                //stats << tmpClient -> getFoundPwdLength() << "\t";
-                //stats << tmpClient -> getSymbSetSize() << "\n";
-                //        cout << "got response:" << tmpClient -> receive(32) << endl;
                 cout << "#" << flush;
             }
 
