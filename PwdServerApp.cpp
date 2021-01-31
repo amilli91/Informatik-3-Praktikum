@@ -7,7 +7,7 @@
  */
 
 
-#include <iostream>
+#include <iostream>     //cout
 
 #include "PwdServer.hpp"
 
@@ -54,7 +54,7 @@ void printInfo(int argc, char *argv[]){
 
         cout << endl << "Usage of PwdServerApp : " << argv[0] << " <port> <password length> <password symbolset size> <thread count>" << endl;
 
-        cout << "\n" << argv[0] << " will be initialized with these default parameters:\n\n"
+        cout << endl << argv[0] << " will be initialized with these default parameters:\n\n"
              << "port:                          " << SERVER_PORT << "\t(port number this server listens on)\n"
              << "password length:               " << PASSWORD_LENGTH << "\t(number of characters in the generated password)\n"
              << "password symbolset size:       " << PASSWORD_SYMBOLSET_SIZE << "\t(number of different symbols for generating the password)\n"

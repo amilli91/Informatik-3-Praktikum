@@ -5,17 +5,16 @@
  *      Author: Luca Magdeburg, Maximilian Moss, Achim Werner
  */
 
-#include <iostream>
-#include <fstream>
-#include <cstdlib>
-#include <string.h>  //strcpy
-#include <sstream>
+#include <iostream>     //cout; cerr
+#include <fstream>      //fstream; ofstream
+#include <string.h>     //strcpy
+#include <sstream>      //stringcopy
 
 #include "PwdClient.hpp"
 
 void printInfo(int argc, char *argv[]);
 bool statistics(PwdClientMultiThread *tmpClient);
-void passwordSelection();
+void statisticParameters(int &minPwdLength, int &maxPwdLength, int &minPwdSymbSetSize, int &maxPwdSymbSetSize, int &iterations);
 
 char DEFAULT_PASSWORD_SERVER_ADRESS[] = "localhost";
 char *PASSWORD_SERVER_ADRESS = DEFAULT_PASSWORD_SERVER_ADRESS;
@@ -23,7 +22,6 @@ int PASSWORD_SERVER_PORT = 1234;
 int PASSWORD_LENGTH = 0;
 int PASSWORD_SYMBOLSET_SIZE = 62;
 int THREAD_COUNT = 1; 
-int PASSWORD_AUTOMATIC_QUEUE = 1;
 
 
 int main(int argc, char *argv[]){
@@ -44,8 +42,8 @@ int main(int argc, char *argv[]){
         PwdClientMultiThread pwdClnt(THREAD_COUNT, PASSWORD_LENGTH, PASSWORD_SYMBOLSET_SIZE);
         
         if(!pwdClnt.connect(PASSWORD_SERVER_ADRESS, PASSWORD_SERVER_PORT)){
-        cerr << "program terminated.\n";
-        exit(0);
+            cerr << "program terminated.\n";
+            exit(0);
         }
 
         char usrInput;
@@ -56,13 +54,31 @@ int main(int argc, char *argv[]){
         if(usrInput == 'y' || usrInput == 'Y'){
             statistics(&pwdClnt);
 
-            cout << "client sends:BYEBYE!" << endl;
             pwdClnt.disconnect();
         }else{
+            usrInput = 'y';
 
-            cout << pwdClnt.bruteForce() << " tries needed." << endl;
+            do{
+                cout << "password length: ";
+                cin >> PASSWORD_LENGTH;
 
-            cout << "client sends:BYEBYE!" << endl;
+                cout << "password symbolset size: ";
+                cin >> PASSWORD_SYMBOLSET_SIZE;
+
+                if(!pwdClnt.sendUpdateRequest(PASSWORD_LENGTH, PASSWORD_SYMBOLSET_SIZE)){
+                    cout << "invalid input! please try again" << endl;
+                    continue;
+                }
+
+                cout << pwdClnt.bruteForce() << " tries needed." << endl;
+
+                cout << endl << "Do you want to find another password?\n"
+                     << "[y,n] ";
+
+                cin >> usrInput;
+
+            }while(usrInput != 'n');
+
             pwdClnt.disconnect();
         }
 
@@ -78,8 +94,11 @@ int main(int argc, char *argv[]){
 }
 
 bool statistics(PwdClientMultiThread *tmpClient){
-    int addedValues = 0;
+    int sum, minPwdLength, maxPwdLength, minPwdSymbSetSize, maxPwdSymbSetSize, iterations = 0;
+    int configCount = 1;
  
+    statisticParameters(minPwdLength, maxPwdLength, minPwdSymbSetSize, maxPwdSymbSetSize, iterations);
+
     fstream test("Bruteforce_Stats.txt");
     ofstream stats;
     if(test.is_open()){
@@ -88,7 +107,7 @@ bool statistics(PwdClientMultiThread *tmpClient){
     }else{
         test.close();
         stats.open("Bruteforce_Stats.txt");
-        stats << "Average\tLength\tSize\t" << endl;
+        stats << "Tries\tLength\tSize\t" << endl;
     }
 
     if(stats.good() != true){
@@ -96,27 +115,28 @@ bool statistics(PwdClientMultiThread *tmpClient){
         return EXIT_FAILURE;
     }
 
-    for(int l=1; l <= PASSWORD_SYMBOLSET_SIZE; l++){
+    for(int currPwdSymbSetSize = minPwdSymbSetSize; currPwdSymbSetSize <= maxPwdSymbSetSize; currPwdSymbSetSize++){
 
-        for(int k=1; k <= PASSWORD_LENGTH; k++){
-            
+        for(int currPwdLength = minPwdLength; currPwdLength <= maxPwdLength; currPwdLength++){
+            cout << configCount << ". " << flush;
+            sum = 0;
         
-            for(int i=0; i < PASSWORD_AUTOMATIC_QUEUE; i++){
-                tmpClient -> sendUpdateRequest(k, l);
-                addedValues = addedValues + tmpClient -> bruteForce();
+            for(int i=0; i < iterations; i++){
+                tmpClient -> sendUpdateRequest(currPwdLength, currPwdSymbSetSize);
+                sum += tmpClient -> bruteForce();
                 cout << "#" << flush;
             }
 
-            stats << (addedValues / PASSWORD_AUTOMATIC_QUEUE) << "\t";
-            stats << PASSWORD_LENGTH << "\t";
-            stats << PASSWORD_SYMBOLSET_SIZE << "\t";
-            addedValues = 0;
+            stats << (sum / iterations) << "\t";
+            stats << currPwdLength << "\t";
+            stats << currPwdSymbSetSize << "\n";
             cout << "\n" << flush;
-
+            configCount++;
         }
     }
 
     stats.close();
+    cout << "statistic done" << endl;
     return true;    
 }
 
@@ -155,30 +175,30 @@ void printInfo(int argc, char *argv[]){
     };
 };
 
-void passwordSelection(){
-        char usrSettings;
+void statisticParameters(int &minPwdLength, int &maxPwdLength, int &minPwdSymbSetSize, int &maxPwdSymbSetSize, int &iterations){
+    cout << endl << "The following parameters have to be specified:" << endl << endl;
 
-       cout <<  "\nPwdClied will be initialized with these default Password-Bruteforce-Parameters:\n\n"
-            << "password length:           " << PASSWORD_LENGTH << "\t\t(known (not 0) or unknown (0) password length)\n"         
-            << "password symbolset size:   " << PASSWORD_SYMBOLSET_SIZE << "\t\t(known (not 0) or unknown (0) password symbolset size)\n" 
-   //       << "thread count:            " << THREAD_COUNT << "\t\t(number of threads that simultaneusly try to find the password)\n\n";
-            << "password automatic queue:  " << PASSWORD_AUTOMATIC_QUEUE << "\t\t(Number of password generations - Bruteforcetries)\n"
+    cout << "minimal password length:           lowest number of characters in the range of tested password configurations\n"
+         << "maximal password length:           largest number of characters in the range of tested password configurations\n"
+         << "minimal password symbolset size:   lowest number of different symbols in the range of tested password configurations\n"
+         << "maximal password symbolset size:   largest number of different symbols in the range of tested password configurations\n"
+         << "iterations per configuration:      number of passwords that will be tested for each password configuration\n\n";
 
-            << "Would you like to change these Settings?";
-        cin >> usrSettings;
+    cout << "minimal password length: ";
+    cin >> minPwdLength;
+    cout << "maximal password length: ";
+    cin >> maxPwdLength;
+    cout << "minimal password symbolset size: ";
+    cin >> minPwdSymbSetSize;
+    cout << "maximal password symbolset size: ";
+    cin >> maxPwdSymbSetSize;
+    cout << "iterations per configuration: ";
+    cin >> iterations;
 
-        if(usrSettings == 'n' || usrSettings == 'N'){
-            return;
+    if( (minPwdLength < 1) || (maxPwdLength < minPwdLength) || (minPwdSymbSetSize < 1) || (maxPwdSymbSetSize < minPwdSymbSetSize) || (iterations < 1)){
+        cout << endl << "invalid input! programm terminated." << endl;
+        exit(0);
+    }
 
-        }else if(usrSettings == 'y' || usrSettings == 'Y'){
-            
-            cout << "Please enter your values and confirm with ENTER: \n\n";
-            cout << "password length:";
-            cin >> PASSWORD_LENGTH;
-            cout << "password symbolset size:";
-            cin >> PASSWORD_SYMBOLSET_SIZE;
-            cout << "password automatic queue:";
-            cin >> PASSWORD_AUTOMATIC_QUEUE;
-        }
-        return;
+    return;
 }

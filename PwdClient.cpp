@@ -272,7 +272,7 @@ unsigned PwdClientMultiThread::bruteForce(int pwdLength){
     }
 
     if(pwdLength == 0){                         //bei pwdLength = 0 wird die Password-Länge des zu knackenden Passworts als unbekannt angenommen 
-        cout << "pwdLength unknown" << endl;    //-> die Passwort-Länge startet mit 1 und wird erhört bis das Passwort gefunden wurde
+        //cout << "pwdLength unknown" << endl;  //-> die Passwort-Länge startet mit 1 und wird erhört bis das Passwort gefunden wurde
         unsigned nextLength = 1;                //-> für die aktuelle Password-Länge werden alle möglichen Kombinationen ausprobiert 
 
         for(int i = 0; i < threadCount_; i++){
@@ -306,7 +306,6 @@ unsigned PwdClientMultiThread::bruteForce(int pwdLength){
         }                                                                                                                                                                                       //with the same password-length but in different  
         clientThreads_[threadCount_-1] = new std::thread(&PwdClient::bruteForce, ref(pwdClients_[threadCount_-1]), ref(isPwdCracked), pwdLength, ((threadCount_-1)*triesPerThread), maxTries);  //intervalls within all possible password-combinations
 
-        cout << "after thread creation" << endl;
 
         while(joinedThreads < threadCount_){                //wait for all threads to join
             for(int i = 0; i < threadCount_; i++){          
@@ -350,6 +349,7 @@ bool PwdClientMultiThread::sendUpdateRequest(int newPwdLength, int newSymbSetSiz
 
 void PwdClientMultiThread::disconnect(){        
     for(int i = 0; i < threadCount_; i++){
+        cout << "client sends:BYEBYE!" << endl;
         pwdClients_[i]->sendData("BYEBYE!");    //sends "BYEBYE!" from every Passwort-Client to end communication
     }
 

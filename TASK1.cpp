@@ -55,9 +55,6 @@ string BlackBoxUnsafe::randomPwd(int l){
 BlackBoxSafe::BlackBoxSafe(int pwdLength, int symbSetSize) :
 	BlackBoxUnsafe(pwdLength, symbSetSize){
 	checkSum_ = sha256(pwd_);
-	
-	cout << pwd_ << endl;
-	cout << checkSum_ << endl;
 
 	pwd_ = string("");
 	
@@ -92,9 +89,6 @@ void BlackBoxSafe::updatePwd(int pwdLength, int symbSetSize){
 	strncpy(charSymbArray_, SYMBOLS.c_str(), lengthSymbArray_);
 	// create and save random password
 	checkSum_ = sha256(this->randomPwd(pwdLength));
-
-	cout << pwd_ << endl;
-	cout << checkSum_ << endl;
 
 	pwd_ = string ("");
 
