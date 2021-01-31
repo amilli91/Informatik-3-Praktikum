@@ -1,7 +1,7 @@
 CC=g++
 
-//CFLAGS=$(shell pkg-config --cflags opencv) 
-//LIBS=$(shell pkg-config --libs opencv) 
+CFLAGS=$(shell pkg-config --cflags opencv) 
+LIBS=$(shell pkg-config --libs opencv) 
 
 OBJS= main.o  TASK1.o TASK2.o TASK4.o SHA256.o SIMPLESOCKET.o
 PWDOBJS=PwdServerApp.o PwdServer.o TASK1.o SHA256.o SIMPLESOCKET.o
@@ -77,7 +77,7 @@ doc:
 	doxygen Doxyfile 
 
 all:	$(ALLTARGET)
-	make clean  && make main && make server && make client && make mainTest && make PwdClient && make PwdServerApp
+	make clean  && make main  && make mainTest && make PwdClientApp && make PwdServerApp
 
 run:	main	
 	./main

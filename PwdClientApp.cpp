@@ -195,7 +195,7 @@ void statisticParameters(int &minPwdLength, int &maxPwdLength, int &minPwdSymbSe
     cout << "iterations per configuration: ";
     cin >> iterations;
 
-    if( (minPwdLength < 1) || (maxPwdLength < minPwdLength) || (minPwdSymbSetSize < 1) || (maxPwdSymbSetSize < minPwdSymbSetSize) || (iterations < 1)){
+    if( (minPwdLength < 1) || (maxPwdLength <= minPwdLength) || (minPwdSymbSetSize < 1) || (maxPwdSymbSetSize <= minPwdSymbSetSize) || (iterations < 1)){
         cout << endl << "invalid input! programm terminated." << endl;
         exit(0);
     }
